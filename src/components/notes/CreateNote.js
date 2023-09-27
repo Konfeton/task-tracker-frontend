@@ -3,7 +3,6 @@ import axios from "axios";
 
 function CreateNote(props) {
 
-    const url = 'http://localhost:8080/users'
     const [data, setData] = useState({
         note : "",
         time : "",
@@ -20,15 +19,15 @@ function CreateNote(props) {
 
     function submit(e){
         e.preventDefault();
-        console.log(url)
         console.log(data)
-        axios.post(url, {
+        axios.post("http://localhost:8080/tracks", {
             note: data.note,
             time: data.time,
             date: data.date
-        })
+
+        }, {withCredentials : true} )
             .then(res=>{
-                console.log(res.data)
+
             })
     }
 

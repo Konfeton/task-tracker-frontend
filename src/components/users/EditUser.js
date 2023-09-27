@@ -23,7 +23,7 @@ function EditUser(props) {
             .catch(error => {
                 console.error('Ошибка при выполнении GET-запроса:', error);
             });
-    },[]);
+    },[id]);
 
     function handle(e){
         const newData = {...data}
