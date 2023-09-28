@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+import '../../config';
 
 
 
 function GetAllUsers() {
     const [data, setData] = useState([]);
+    const BASE_URL = global.config.BASE_URL;
 
     useEffect(() => {
         // Выполнение GET-запроса при монтировании компонента
-        axios.get('http://localhost:8080/users', {withCredentials:true, credentials: 'include'})
+        axios.get( BASE_URL +'/users', {withCredentials:true, credentials: 'include'})
             .then(response => {
                 // Обработка успешного ответа от сервера
                 setData(response.data);
@@ -26,7 +28,7 @@ function GetAllUsers() {
 
     function deleteHandle(e, id){
         console.log(data.id)
-        axios.delete('http://localhost:8080/users?id=' + id, {withCredentials:true, credentials: 'include'})
+        axios.delete(BASE_URL + '/users?id=' + id, {withCredentials:true, credentials: 'include'})
             .then(response => {
                 setMessage('Success');
                 window.location.reload()

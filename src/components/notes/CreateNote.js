@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 import axios from "axios";
 import {Link} from "react-router-dom";
+import '../../config';
 
 function CreateNote(props) {
 
     const [message, setMessage] = useState()
+    const BASE_URL = global.config.BASE_URL;
 
     const [data, setData] = useState({
         note : "",
@@ -23,7 +25,7 @@ function CreateNote(props) {
     function submit(e){
         e.preventDefault();
         console.log(data)
-        axios.post("http://localhost:8080/tracks", {
+        axios.post(BASE_URL + "/tracks", {
             note: data.note,
             time: data.time,
             date: data.date

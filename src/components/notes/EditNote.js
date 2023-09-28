@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import axios from "axios";
+import '../../config';
 
 function EditNote(props) {
 
     const { id } = useParams(); // ѕолучаем значение параметра :id из URL
     let navigate = useNavigate()
+    const BASE_URL = global.config.BASE_URL;
+
+
     const [message, setMessage] = useState()
     const [data, setData] = useState({
         note : "",
@@ -16,7 +20,7 @@ function EditNote(props) {
 
     useEffect(() => {
         // ¬ыполнение GET-запроса с использованием id из URL
-        axios.get(`http://localhost:8080/tracks?id=${id}`,
+        axios.get(BASE_URL + `/tracks?id=${id}`,
             {withCredentials:true, credentials: 'include'})
             .then(response => {
                 setData(response.data);
@@ -36,7 +40,7 @@ function EditNote(props) {
     function submit(e){
         e.preventDefault();
         console.log(data)
-        axios.put(`http://localhost:8080/tracks?id=${id}`, {
+        axios.put(BASE_URL + `/tracks?id=${id}`, {
             note: data.note ,
             time: data.time,
             date: data.date

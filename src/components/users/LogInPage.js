@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import '../../config';
 
 function LogInPage(props) {
 
     const [message, setMessage] = useState('');
+    const BASE_URL = global.config.BASE_URL;
 
     let navigate = useNavigate()
     const [data, setData] = useState({
@@ -23,7 +25,7 @@ function LogInPage(props) {
     function submit(e){
         e.preventDefault();
         console.log(data)
-        axios.post("http://localhost:8080/login", {
+        axios.post(BASE_URL + "/login", {
             email: data.email,
             password: data.password
         }, {withCredentials: true, credential: 'include'})

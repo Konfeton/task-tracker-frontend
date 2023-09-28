@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from "axios";
 
+import '../../config';
+
 function EditUser(props) {
 
     const { id } = useParams(); // ѕолучаем значение параметра :id из URL
+    const BASE_URL = global.config.BASE_URL;
 
     const [data, setData] = useState({
         id: "",
@@ -16,7 +19,7 @@ function EditUser(props) {
 
     useEffect(() => {
         // ¬ыполнение GET-запроса с использованием id из URL
-        axios.get(`http://localhost:8080/users?id=${id}`, {withCredentials:true, credentials: 'include'})
+        axios.get(BASE_URL + `/users?id=${id}`, {withCredentials:true, credentials: 'include'})
             .then(response => {
                 setData(response.data);
             })
@@ -35,7 +38,7 @@ function EditUser(props) {
     function submit(e){
         e.preventDefault();
         console.log(data)
-        axios.put(`http://localhost:8080/users?id=${id}`, {
+        axios.put(BASE_URL + `/users?id=${id}`, {
             name: data.name,
             lastname: data.lastname,
             email: data.email

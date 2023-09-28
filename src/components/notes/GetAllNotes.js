@@ -2,17 +2,19 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import cookie from "cookie";
+import '../../config';
 
 
 function GetAllNotes() {
     const [notes, setNotes] = useState([]);
 
     const [message, setMessage] = useState('');
+    const BASE_URL = global.config.BASE_URL;
 
 
     useEffect(() => {
         // Выполнение GET-запроса при монтировании компонента
-        axios.get('http://localhost:8080/tracks', {withCredentials:true, credentials: "include"})
+        axios.get(BASE_URL + '/tracks', {withCredentials:true, credentials: "include"})
             .then(response => {
                 // Обработка успешного ответа от сервера
                 setNotes(response.data);
@@ -26,7 +28,7 @@ function GetAllNotes() {
     }, []);
 
     function deleteHandle(e, id){
-        axios.delete('http://localhost:8080/tracks?id=' + id, {withCredentials:true, credentials: "include"})
+        axios.delete(BASE_URL + '/tracks?id=' + id, {withCredentials:true, credentials: "include"})
             .then(response => {
                 setMessage('Success');
                 window.location.reload()

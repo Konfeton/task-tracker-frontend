@@ -1,9 +1,13 @@
 import React, {useState} from 'react';
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
+import '../../config';
 function PostForm(props) {
 
-    const url = 'http://localhost:8080/users'
+    const BASE_URL = global.config.BASE_URL;
+    let navigate = useNavigate()
+
     const [message, setMessage] = useState('');
     const [data, setData] = useState({
         name : "",
@@ -22,9 +26,8 @@ function PostForm(props) {
 
     function submit(e){
         e.preventDefault();
-        console.log(url)
         console.log(data)
-        axios.post(url, {
+        axios.post(BASE_URL +"/users", {
             name: data.name,
             lastname: data.lastname,
             email: data.email,
@@ -32,6 +35,8 @@ function PostForm(props) {
         }, {withCredentials:true, credentials: 'include'})
             .then(res=>{
                 console.log(res.data)
+                navigate("/")
+
             })
             .catch(error =>{
                 if (error.response.status === 400)
