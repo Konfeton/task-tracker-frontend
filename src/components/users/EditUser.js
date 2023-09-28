@@ -16,7 +16,7 @@ function EditUser(props) {
 
     useEffect(() => {
         // ¬ыполнение GET-запроса с использованием id из URL
-        axios.get(`http://localhost:8080/users?id=${id}`)
+        axios.get(`http://localhost:8080/users?id=${id}`, {withCredentials:true, credentials: 'include'})
             .then(response => {
                 setData(response.data);
             })
@@ -39,7 +39,7 @@ function EditUser(props) {
             name: data.name,
             lastname: data.lastname,
             email: data.email
-        })
+        }, {withCredentials:true, credentials: 'include'})
             .then(res=>{
                 console.log(res.data)
             })

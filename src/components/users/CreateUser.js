@@ -4,6 +4,7 @@ import axios from "axios";
 function PostForm(props) {
 
     const url = 'http://localhost:8080/users'
+    const [message, setMessage] = useState('');
     const [data, setData] = useState({
         name : "",
         lastname : "",
@@ -28,9 +29,15 @@ function PostForm(props) {
             lastname: data.lastname,
             email: data.email,
             password: data.password
-        })
+        }, {withCredentials:true, credentials: 'include'})
             .then(res=>{
                 console.log(res.data)
+            })
+            .catch(error =>{
+                if (error.response.status === 400)
+                    setMessage("Can't create such user")
+                else
+                    setMessage("smth went wrong")
             })
     }
 
@@ -43,6 +50,7 @@ function PostForm(props) {
                 <input onChange={(e) =>handle(e)} id={'password'} value={data.password} type={"password"} placeholder={'password'}/>
                 <button>Submit</button>
             </form>
+            <p>{message}</p>
         </div>
     );
 }

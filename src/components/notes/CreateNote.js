@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
 import axios from "axios";
+import {Link} from "react-router-dom";
 
 function CreateNote(props) {
+
+    const [message, setMessage] = useState()
 
     const [data, setData] = useState({
         note : "",
@@ -25,10 +28,17 @@ function CreateNote(props) {
             time: data.time,
             date: data.date
 
-        }, {withCredentials : true} )
+        }, {withCredentials : true,
+        credentials : 'include'} )
             .then(res=>{
-
+                window.location.reload()
             })
+            .catch(err =>{
+                if (err.response.status === 403)
+                    setMessage("You're not authorized ")
+                else
+                    setMessage("smth went wrong")
+        })
     }
 
     return (
@@ -39,6 +49,8 @@ function CreateNote(props) {
                 <input onChange={(e) =>handle(e)} id={'date'} value={data.date} type={"date"} placeholder={'date'}/>
                 <button>Submit</button>
             </form>
+            <p>{message}</p>
+            {/*<Link to={"/"}>Back to Main menu</Link>*/}
         </div>
     );
 }

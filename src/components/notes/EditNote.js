@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import axios from "axios";
 
 function EditNote(props) {
 
     const { id } = useParams(); // Получаем значение параметра :id из URL
-
+    let navigate = useNavigate()
+    const [message, setMessage] = useState()
     const [data, setData] = useState({
         note : "",
         time : "",
@@ -15,12 +16,13 @@ function EditNote(props) {
 
     useEffect(() => {
         // Выполнение GET-запроса с использованием id из URL
-        axios.get(`http://localhost:8080/tracks?id=${id}`)
+        axios.get(`http://localhost:8080/tracks?id=${id}`,
+            {withCredentials:true, credentials: 'include'})
             .then(response => {
                 setData(response.data);
             })
             .catch(error => {
-                console.error('Ошибка при выполнении GET-запроса:', error);
+                console.error('GET error:', error);
             });
     },[id]);
 
@@ -35,12 +37,16 @@ function EditNote(props) {
         e.preventDefault();
         console.log(data)
         axios.put(`http://localhost:8080/tracks?id=${id}`, {
-            name: data.name,
-            lastname: data.lastname,
-            email: data.email
-        })
+            note: data.note ,
+            time: data.time,
+            date: data.date
+        }, {withCredentials:true, credentials: 'include'})
             .then(res=>{
                 console.log(res.data)
+                navigate("/notes")
+            })
+            .catch(e =>{
+                setMessage("smt went wrong")
             })
     }
 
@@ -52,6 +58,7 @@ function EditNote(props) {
                 <input onChange={(e) =>handle(e)} id={'date'} value={data.date} type={"date"} placeholder={'date'}/>
                 <button>Submit</button>
             </form>
+            <p>{message}</p>
         </div>
     );
 }

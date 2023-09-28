@@ -4,6 +4,8 @@ import {useNavigate} from "react-router-dom";
 
 function LogInPage(props) {
 
+    const [message, setMessage] = useState('');
+
     let navigate = useNavigate()
     const [data, setData] = useState({
         email : "",
@@ -24,17 +26,18 @@ function LogInPage(props) {
         axios.post("http://localhost:8080/login", {
             email: data.email,
             password: data.password
-        })
+        }, {withCredentials: true, credential: 'include'})
             .then(res=>{
-                console.log(res.data)
                 console.log("loggedIn")
+                navigate("/")
             })
             .catch(error =>{
-                console.log(error)
+                setMessage("Wrong email or password")
             })
-        navigate("/")
-        // axios.post("http://localhost:8080/logout")
+        localStorage.setItem("email", data.email)
     }
+
+
 
     return (
         <div>
@@ -43,6 +46,7 @@ function LogInPage(props) {
                 <input onChange={(e) =>handle(e)} id={'password'} value={data.password} type={"password"} placeholder={'password'}/>
                 <button>Submit</button>
             </form>
+            <p>{message}</p>
         </div>
     );
 }
