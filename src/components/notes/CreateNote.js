@@ -7,7 +7,6 @@ function CreateNote(props) {
 
     const [message, setMessage] = useState()
     const BASE_URL = global.config.BASE_URL;
-    const COOKIE = global.config.cookieOptions;
 
     const [data, setData] = useState({
         note : "",
@@ -29,8 +28,7 @@ function CreateNote(props) {
         axios.post(BASE_URL + "/tracks", {
             note: data.note,
             time: data.time,
-            date: data.date,
-            COOKIE
+            date: data.date
 
         }, {withCredentials : true,
         credentials : 'include'} )
