@@ -7,6 +7,7 @@ function LogInPage(props) {
 
     const [message, setMessage] = useState('');
     const BASE_URL = global.config.BASE_URL;
+    const COOKIE = global.config.cookieOptions;
 
     let navigate = useNavigate()
     const [data, setData] = useState({
@@ -27,7 +28,8 @@ function LogInPage(props) {
         console.log(data)
         axios.post(BASE_URL + "/login", {
             email: data.email,
-            password: data.password
+            password: data.password,
+            COOKIE
         }, {withCredentials: true, credential: 'include'})
             .then(res=>{
                 console.log("loggedIn")

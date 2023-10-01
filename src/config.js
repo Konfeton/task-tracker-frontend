@@ -3,11 +3,9 @@ module.exports = global.config = {
     // other global config variables you wish
 };
 
-module.exports = (on, config) => {
-    on('before:browser:launch', (browser = {}, launchOptions) => {
-        if (browser.name === 'chrome' || browser.name === 'edge') {
-            launchOptions.args.push('--disable-features=SameSiteByDefaultCookies') 
-            return launchOptions
-        }
-    })
-}
+const cookieOptions = {
+    httpOnly: true,
+    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    sameSite: "none",
+    secure: true, // this was 'false' before. 'true' works.
+};
