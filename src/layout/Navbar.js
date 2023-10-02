@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import LogInPage from "../components/users/LogInPage";
  function Navbar() {
+    const BASE_URL = global.config.BASE_URL;
 
     function handle(){
-        axios.post("http://localhost:8080/logout", {}, {withCredentials:true, credentials: 'include'})
+        axios.post(BASE_URL + "/logout", {}, {withCredentials:true, credentials: 'include'})
     }
 
     return (
