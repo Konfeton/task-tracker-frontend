@@ -44,7 +44,7 @@ function GetAllUsers() {
     return (
         <div>
 
-            <div className="container">
+            {/*<div className="container">
                 <div className="py-4">
                     <table className="table border shadow">
                         <thead>
@@ -62,7 +62,7 @@ function GetAllUsers() {
                     </table>
                 </div>
             </div>
-
+*/}
             {data.map(item => (
                 <p key={item.id}>
                     {item.id}  {item.name} , {item.lastname}, {item.email}
